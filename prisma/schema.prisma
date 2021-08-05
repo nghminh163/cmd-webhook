@@ -19,9 +19,7 @@ model Comment {
   content       String
   permalink_url String
   user          FbUser   @relation(fields: [fbUserId], references: [id])
-
-
-  fbUserId String
+  fbUserId      String
 }
 
 model FbUser {

@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import { Routes } from '@interfaces/routes.interface';
 import { Request, Response } from 'express-serve-static-core';
+import { generateToken } from './utils/requests';
+import myCache from './utils/cache';
 
 class App {
   public app: express.Application;
@@ -16,6 +18,7 @@ class App {
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializePingPong();
+    this.initializeData();
   }
 
   public listen() {
@@ -45,6 +48,13 @@ class App {
 
   private initializePingPong() {
     this.app.get('/ping', (req: Request, res: Response) => res.send('pong'));
+  }
+
+  private initializeData() {
+    const access_token = process.env.FB_ACCESS_TOKEN;
+    generateToken(access_token).then(({ access_token, expires_in }: { access_token: string; expires_in: number }) => {
+      myCache.set('FB_ACCESS_TOKEN', access_token, expires_in - 600);
+    });
   }
 }
 

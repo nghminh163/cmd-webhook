@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 import { forceParseNumber } from '@utils/validate';
-import { getDataFromCommentId } from '@/utils/requests';
 class CommentController {
   private prisma = new PrismaClient();
 
