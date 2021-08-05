@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  server:
+    image: "callmeduy_webhook:production"
+    container_name: "callmeduy_webhook"
+    build:
+        # context: webhook
+        context: .
+    env_file:
+        - .env
+    ports: 
+        - 3000:3000
+    volumes:
+        - ./webhook/prisma:/usr/src/app/prisma
